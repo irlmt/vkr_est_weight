@@ -28,7 +28,9 @@ class MassOptimizer:
                 velocity_errors.append(dvx**2 + dvy**2 + dvz**2)
 
         position_disp = utils.calc_disp(position_errors)
-        velocity_disp = utils.calc_disp(velocity_errors) if velocity_errors else 0.0
+        velocity_disp = (
+            utils.calc_disp(velocity_errors) if velocity_errors else float(0)
+        )
 
         total_cost = math.sqrt(position_disp + self.velocity_weight * velocity_disp)
         return total_cost
