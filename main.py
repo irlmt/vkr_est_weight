@@ -4,24 +4,7 @@ from project import config
 from project.data_loader import load_trajectory
 from project.optimizer import MassOptimizer
 from project.integrator import integrate_trajectory
-
-
-def plot_trajectory(reference, model):
-    x_ref = [p.x for p in reference]
-    y_ref = [p.y for p in reference]
-
-    x_model = model.y[0]
-    y_model = model.y[2]
-
-    plt.figure(figsize=(10, 6))
-    plt.plot(x_ref, y_ref, linestyle="--")
-    plt.plot(x_model, y_model, label="Model")
-    plt.xlabel("X")
-    plt.ylabel("Y")
-    plt.title("diff")
-    plt.legend()
-    plt.grid()
-    plt.show()
+from project.plotter import plot_trajectory
 
 
 def main():
