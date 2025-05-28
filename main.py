@@ -5,6 +5,7 @@ from project.data_loader import load_trajectory
 from project.optimizer import MassOptimizer
 from project.integrator import integrate_trajectory
 from project.plotter import plot_trajectory
+from project.utils import calculate_metrics
 
 
 def main():
@@ -28,13 +29,19 @@ def main():
     optimizer = MassOptimizer(reference, velocity_weight=args.velocity_weight)
     m_opt, cost = optimizer.find_optimal_mass()
 
-    print(f"Calculated weught m_кон: {m_opt:.2f}")
+    print(f"Calculated weight m_кон: {m_opt:.2f}")
     print(
         f"Functionality (accounting for speeds with weight {args.velocity_weight}): {cost:.4f}"
     )
 
+    result = integrate_trajectory(m_opt, config.INITIAL_STATE)
+
+    metrics = calculate_metrics(reference, result)
+    print(f"RMSE: {metrics['RMSE']:.2f} m")
+    print(f"Max deviation: {metrics['Max deviation']:.2f} m")
+    print(f"End deviation: {metrics['End deviation']:.2f} m")
+
     if args.plot:
-        result = integrate_trajectory(m_opt, config.INITIAL_STATE)
         plot_trajectory(reference, result)
 
 
