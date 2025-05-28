@@ -22,9 +22,9 @@ class MassOptimizer:
             position_errors.append(dx**2 + dy**2 + dz**2)
 
             if self.velocity_weight > 0.0:
-                dvx = result.y[1, i]
-                dvy = result.y[3, i]
-                dvz = result.y[5, i]
+                dvx = result.y[1, i] - self.reference[i].vx
+                dvy = result.y[3, i] - self.reference[i].vy
+                dvz = result.y[5, i] - self.reference[i].vz
                 velocity_errors.append(dvx**2 + dvy**2 + dvz**2)
 
         position_disp = utils.calc_disp(position_errors)
